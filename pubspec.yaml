@@ -29,9 +29,11 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   android_alarm_manager_plus: ^3.0.1
+  bloc: ^8.1.4
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.5
   flutter_local_notifications: ^15.0.1
   flutter_rating_bar: ^4.0.1
   google_fonts: ^5.1.0

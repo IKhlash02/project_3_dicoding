@@ -1,11 +1,13 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:project_1/data/api/api_service.dart';
 import 'package:project_1/data/db/database_helper.dart';
 
 import 'package:project_1/data/model/restaurant_elemen.dart';
 import 'package:project_1/provider/database_provider.dart';
+import 'package:project_1/provider/list_restaurant/list_restaurant_bloc.dart';
 import 'package:project_1/provider/list_restaurant_provider.dart';
 import 'package:project_1/provider/restauran_detail_provider.dart';
 import 'package:project_1/provider/scheduling_provider.dart';
@@ -39,11 +41,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ListRestaurantProvider(
-            apiService: ApiService(),
-          ),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => ListRestaurantProvider(
+        //     apiService: ApiService(),
+        //   ),
+        // ),
         ChangeNotifierProvider(
           create: (context) => DatabaseProvider(
             databaseHelper: DatabaseHelper(),
@@ -58,21 +60,29 @@ class MyApp extends StatelessWidget {
           ),
         )
       ],
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-            textTheme: myTextheme),
-        initialRoute: ListRestaurant.routeName,
-        routes: {
-          ListRestaurant.routeName: (context) => const ListRestaurant(),
-          RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
-              restaurantElement: ModalRoute.of(context)?.settings.arguments
-                  as RestaurantElement),
-        },
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => ListRestaurantBloc(apiService: ApiService(),
+              ),
+          )
+        ],
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+              textTheme: myTextheme),
+          initialRoute: ListRestaurant.routeName,
+          routes: {
+            ListRestaurant.routeName: (context) => const ListRestaurant(),
+            RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
+                restaurantElement: ModalRoute.of(context)?.settings.arguments
+                    as RestaurantElement),
+          },
+        ),
       ),
     );
   }

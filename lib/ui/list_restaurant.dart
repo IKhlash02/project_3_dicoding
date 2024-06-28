@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_1/data/api/api_service.dart';
-
-import 'package:project_1/provider/list_restaurant_provider.dart';
+import 'package:project_1/provider/list_restaurant/list_restaurant_bloc.dart';
 import 'package:project_1/provider/restaurant_search_provider.dart';
-
 import 'package:project_1/ui/search_page.dart';
 import 'package:project_1/ui/settings_page.dart';
-
 import 'package:provider/provider.dart';
 
 import '../common/result_state.dart';
@@ -26,9 +24,11 @@ class ListRestaurant extends StatefulWidget {
 
 class _ListRestaurantState extends State<ListRestaurant> {
   final NotificationHelper _notificationHelper = NotificationHelper();
+
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ListRestaurantBloc>(context).add(FetchListRestaurant());
     _notificationHelper.configureSelectNotificationSubject(
         context, RestaurantDetailPage.routeName);
   }
@@ -60,12 +60,7 @@ class _ListRestaurantState extends State<ListRestaurant> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return ChangeNotifierProvider(
-                    create: (contex) => RestaurantSearchProvider(
-                      apiService: ApiService(),
-                    ),
-                    child: const FavoriteRestaurantPage(),
-                  );
+                  return const FavoriteRestaurantPage();
                 }),
               );
             },
@@ -106,12 +101,12 @@ class _ListRestaurantState extends State<ListRestaurant> {
                 "Recommendation restauran for you!",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              Consumer<ListRestaurantProvider>(
-                builder: (context, state, _) {
+              BlocBuilder<ListRestaurantBloc, RestaurantState>(
+                builder: (context, state) {
                   if (state.state == ResultState.loading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state.state == ResultState.hasData) {
-                    final restaurantData = state.result;
+                    final restaurantData = state.listRestaurant!;
 
                     return ListView.builder(
                       shrinkWrap: true,
@@ -129,7 +124,7 @@ class _ListRestaurantState extends State<ListRestaurant> {
                   } else if (state.state == ResultState.noData) {
                     return Center(
                       child: Material(
-                        child: Text(state.message),
+                        child: Text(state.message!),
                       ),
                     );
                   } else if (state.state == ResultState.error) {
@@ -138,7 +133,7 @@ class _ListRestaurantState extends State<ListRestaurant> {
                         child: Padding(
                           padding: EdgeInsets.only(
                               top: MediaQuery.of(context).size.height / 4),
-                          child: Text(state.message),
+                          child: Text(state.message!),
                         ),
                       ),
                     );
