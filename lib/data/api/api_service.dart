@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:project_1/data/model/restaurant_detail.dart';
-import 'package:project_1/data/model/restaurant_elemen.dart';
+import 'package:project_1/data/model/restaurant_element.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/cutomer_review.dart';

@@ -4,16 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:project_1/data/api/api_service.dart';
 import 'package:project_1/data/db/database_helper.dart';
-
-import 'package:project_1/data/model/restaurant_elemen.dart';
+import 'package:project_1/data/model/restaurant_element.dart';
 import 'package:project_1/provider/database_provider.dart';
 import 'package:project_1/provider/list_restaurant/list_restaurant_bloc.dart';
-import 'package:project_1/provider/list_restaurant_provider.dart';
 import 'package:project_1/provider/restauran_detail_provider.dart';
+import 'package:project_1/provider/restaurant_detail/restaurant_detail_bloc.dart';
 import 'package:project_1/provider/scheduling_provider.dart';
+import 'package:project_1/tex_themde.dart';
 import 'package:project_1/ui/detail_restaurant.dart';
 import 'package:project_1/ui/list_restaurant.dart';
-import 'package:project_1/tex_themde.dart';
 import 'package:project_1/utils/background_service.dart';
 import 'package:project_1/utils/notification_helper.dart';
 import 'package:provider/provider.dart';
@@ -54,17 +53,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SchedulingProvider>(
           create: (_) => SchedulingProvider(),
         ),
-        ChangeNotifierProvider<RestaurantDetailProvider>(
-          create: (context) => RestaurantDetailProvider(
-            apiService: ApiService(),
-          ),
-        )
+        // ChangeNotifierProvider<RestaurantDetailProvider>(
+        //   create: (context) => RestaurantDetailProvider(
+        //     apiService: ApiService(),
+        //   ),
+        // )
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => ListRestaurantBloc(apiService: ApiService(),
-              ),
+            create: (context) => ListRestaurantBloc(
+              apiService: ApiService(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => RestaurantDetailBloc(
+              apiService: ApiService(),
+            ),
           )
         ],
         child: MaterialApp(

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_1/data/model/restaurant_elemen.dart';
+import 'package:project_1/data/model/restaurant_element.dart';
 
 import '../common/result_state.dart';
 import '../data/db/database_helper.dart';

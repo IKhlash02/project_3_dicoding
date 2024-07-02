@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:project_1/data/api/api_service.dart';
-import 'package:project_1/data/model/restaurant_elemen.dart';
+import 'package:project_1/data/model/restaurant_element.dart';
 
 import '../common/result_state.dart';
 

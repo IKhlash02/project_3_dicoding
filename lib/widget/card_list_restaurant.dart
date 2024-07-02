@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:project_1/data/api/api_service.dart';
 
-import '../data/model/restaurant_elemen.dart';
+import '../data/model/restaurant_element.dart';
 
 import '../ui/detail_restaurant.dart';
 

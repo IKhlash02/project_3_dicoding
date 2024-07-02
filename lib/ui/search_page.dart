@@ -4,7 +4,7 @@ import 'package:project_1/widget/search_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../common/result_state.dart';
-import '../data/model/restaurant_elemen.dart';
+import '../data/model/restaurant_element.dart';
 
 import '../widget/card_list_restaurant.dart';
 
